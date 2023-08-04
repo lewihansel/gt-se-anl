@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import ButtonBorder from 'components/Button/ButtonBorder';
 import useAnimList from 'hooks/useAnimList';
 import Link from 'next/link';
 
@@ -11,33 +12,60 @@ import Link from 'next/link';
 // });
 
 export default function Home() {
-    const { data, nextPage, prevPage, page } = useAnimList();
+    const { data, nextPage, prevPage, page, loading } = useAnimList();
+
     return (
         <>
-            {`Current Page = ${page}`}
-            <button onClick={prevPage}>Prev</button>
-            <button onClick={nextPage}>Next</button>
-
-            <div css={animListContainer}>
-                {data?.map(anim => (
-                    <div key={anim?.id} css={animListItem}>
-                        <Link href={`/detail/${anim?.id}`}>
-                            <div css={animListItemPoster}>
-                                <img
-                                    src={anim?.coverImage?.medium ?? ''}
-                                    alt={anim?.title?.userPreferred ?? ''}
-                                />
-                            </div>
-                            <h5 css={animListItemTitle}>
-                                {anim?.title?.userPreferred}
-                            </h5>
-                        </Link>
-                    </div>
-                ))}
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <div css={animListContainer}>
+                    {data?.map(anim => (
+                        <div key={anim?.id} css={animListItem}>
+                            <Link href={`/detail/${anim?.id}`}>
+                                <div css={animListItemPoster}>
+                                    <img
+                                        src={anim?.coverImage?.medium ?? ''}
+                                        alt={anim?.title?.userPreferred ?? ''}
+                                    />
+                                </div>
+                                <h5 css={animListItemTitle}>
+                                    {anim?.title?.userPreferred}
+                                </h5>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            )}
+            <div css={paginationContainer}>
+                <ButtonBorder disabled={page === 1} onClick={prevPage}>Prev</ButtonBorder>
+                <span css={pageNumber}>
+                    <h5>Page</h5>
+                    <span>{`${page}`}</span>
+                </span>
+                <ButtonBorder onClick={nextPage}>Next</ButtonBorder>
             </div>
         </>
     );
 }
+
+const pageNumber = css({
+    fontSize: '24px',
+    padding: '4px 12px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    h5: {
+        fontSize: '10px',
+    },
+});
+
+const paginationContainer = css({
+    display: 'flex',
+    gap: '6px',
+    justifyContent: 'center',
+    alignItems: 'center',
+});
 
 const animListContainer = css({
     display: 'flex',

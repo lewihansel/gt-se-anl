@@ -6,6 +6,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { ANIM_SERVICE } from 'constant/environment';
 import { mainContainerStyle } from 'styles/mainContainer';
 import { css } from '@emotion/react';
+import Link from 'next/link';
 
 const montserrat = Montserrat({
     subsets: ['latin'],
@@ -32,14 +33,16 @@ export default function App({ Component, pageProps }: AppProps) {
             <ApolloProvider client={client}>
                 <main className={montserrat.variable}>
                     <div css={mainContainerStyle}>
-                        <h2
-                            css={css({
-                                margin: '0 0 16px',
-                                borderBottom: 'white solid 1px',
-                            })}
-                        >
-                            Animlist
-                        </h2>
+                        <Link href="/">
+                            <h2
+                                css={css({
+                                    margin: '0 0 16px',
+                                    borderBottom: 'white solid 1px',
+                                })}
+                            >
+                                Animlist
+                            </h2>
+                        </Link>
                         <Component {...pageProps} />
                     </div>
                 </main>
