@@ -7,6 +7,7 @@ import { ANIM_SERVICE } from 'constant/environment';
 import { mainContainerStyle } from 'styles/mainContainer';
 import { css } from '@emotion/react';
 import Link from 'next/link';
+import ButtonDefault from 'components/Button/ButtonDefault';
 
 const montserrat = Montserrat({
     subsets: ['latin'],
@@ -33,16 +34,14 @@ export default function App({ Component, pageProps }: AppProps) {
             <ApolloProvider client={client}>
                 <main className={montserrat.variable}>
                     <div css={mainContainerStyle}>
-                        <Link href="/">
-                            <h2
-                                css={css({
-                                    margin: '0 0 16px',
-                                    borderBottom: 'white solid 1px',
-                                })}
-                            >
-                                Animlist
-                            </h2>
-                        </Link>
+                        <nav css={navContainer}>
+                            <Link href="/">
+                                <h2 css={navLogo}>Animlist</h2>
+                            </Link>
+                            <div>
+                                <ButtonDefault>Collection 💼</ButtonDefault>
+                            </div>
+                        </nav>
                         <Component {...pageProps} />
                     </div>
                 </main>
@@ -50,3 +49,14 @@ export default function App({ Component, pageProps }: AppProps) {
         </>
     );
 }
+
+const navLogo = css({
+    borderBottom: 'white solid 1px',
+});
+
+const navContainer = css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: '0 0 20px',
+});

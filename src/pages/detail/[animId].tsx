@@ -5,7 +5,7 @@ import { GET_ANIM_DETAIL } from 'query/getAnimDetail';
 import { useMemo } from 'react';
 import { sanitizeHtml } from 'utils/sanitize';
 
-export default function Page() {
+export default function DetailPage() {
     const router = useRouter();
     const animId = useMemo(
         () => Number(router.query.animId),
